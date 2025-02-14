@@ -1,0 +1,41 @@
+@startuml ClassDiagram
+
+Renderer --> iQuery
+Trend --|> iQuery
+
+interface iQuery {
+    + request(start : DateTime, end : DateTime, interval : int)
+}
+
+Renderer --> "alarmsEngine" AlarmsEngine
+
+AlarmsFrame --|> Alarms
+Alarms --> AlarmsEngine : engine
+
+AlarmsFrame --> AlarmsEngine : engine
+
+AlarmsFrame --|> AlarmsBar
+AlarmsBar --> AlarmsEngine : engine
+
+
+
+
+
+
+class AlarmsEngine {
+    - alarms: QVector<QList<Alarm>
+    - sortAlarmsByPriority(): void
+
+    + pushAlarms(alarms: QVector<QList<Alarm>)
+    + getAlarmsByPriority(lvl : LevelOfAlarms) : QVariantList {slot}
+    + getTextOfAlarms() : QVector<QString> {slot}
+}
+
+
+
+
+
+
+
+
+@enduml

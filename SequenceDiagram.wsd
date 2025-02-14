@@ -1,0 +1,31 @@
+@startuml SequenceDiagram
+
+skinparam sequenceMessageAlign left
+
+EventLoop -> Renderer: limitChangesX
+activate EventLoop
+activate Renderer
+activate AlarmsBar
+activate Alarms
+activate iQuery
+activate AlarmsEngine
+
+Renderer -> iQuery: request(start : DateTime, end : DateTime, interval : int) : Array[][]
+iQuery --> Renderer: arr : Array[][]
+
+Renderer -> AlarmsEngine: pushAlarms(arr)
+
+AlarmsEngine -> AlarmsBar: updated()
+AlarmsBar -> AlarmsBar:  clearValues()
+AlarmsBar -> AlarmsEngine: getAlarmsByPriority(lvl: LvlOfAlarms) : QVariantList
+
+AlarmsEngine -> Alarms:  updated()
+Alarms -> Alarms:  clearValues()
+Alarms -> AlarmsEngine: getTextOfAlarms() : QVector<QString>
+
+box qml #LightGreen
+    participant AlarmsBar
+    participant Alarms
+end box
+
+@enduml
