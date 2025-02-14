@@ -15,11 +15,11 @@ iQuery --> Renderer: arr : Array[][]
 
 Renderer -> AlarmsEngine: pushAlarms(arr)
 
-AlarmsEngine -> AlarmsBar: updated()
+Renderer -> AlarmsBar: updated()
 AlarmsBar -> AlarmsBar:  clearValues()
 AlarmsBar -> AlarmsEngine: getAlarmsByPriority(lvl: LvlOfAlarms) : QVariantList
 
-AlarmsEngine -> Alarms:  updated()
+Renderer -> Alarms:  updated()
 Alarms -> Alarms:  clearValues()
 Alarms -> AlarmsEngine: getTextOfAlarms() : QVector<QString>
 
