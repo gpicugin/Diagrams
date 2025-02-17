@@ -1,13 +1,36 @@
 @startuml ClassDiagram
 
+class Renderer {
+    - parceDate(cortege : Cortege) : void
+    + alarmsUpdated() : void {signal}
+}
+
+interface iQuery {
+    + request(start : DateTime, end : DateTime, interval : DateTime) : QVector<Cortege>
+}
+
+class AlarmsEngine {
+    - alarms: QVector<QList<Alarm>
+    - sortAlarmsByPriority(): void
+
+    + pushAlarms(alarms: QList<Alarm>) : void
+    + getAlarmsByPriority(lvl : LevelOfAlarms) : QVariantList {slot}
+    + getTextOfAlarms() : QVector<QString> {slot}
+}
+
+struct Alarm {
+    + QString : alarmText
+    + enum numChannel : channel
+    + LevelOfAlarms : lvl
+}
+
+Renderer --> Alarm
+AlarmsEngine --> Alarm
+
 Renderer --> iQuery
 Trend --|> iQuery
 
-interface iQuery {
-    + request(start : DateTime, end : DateTime, interval : int)
-}
-
-Renderer --> "alarmsEngine" AlarmsEngine
+Renderer --> AlarmsEngine
 
 AlarmsFrame --|> Alarms
 Alarms --> AlarmsEngine : engine
@@ -22,14 +45,6 @@ AlarmsBar --> AlarmsEngine : engine
 
 
 
-class AlarmsEngine {
-    - alarms: QVector<QList<Alarm>
-    - sortAlarmsByPriority(): void
-
-    + pushAlarms(alarms: QVector<QList<Alarm>)
-    + getAlarmsByPriority(lvl : LevelOfAlarms) : QVariantList {slot}
-    + getTextOfAlarms() : QVector<QString> {slot}
-}
 
 
 

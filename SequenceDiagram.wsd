@@ -1,25 +1,26 @@
 @startuml SequenceDiagram
 
 skinparam sequenceMessageAlign left
-
-EventLoop -> Renderer: limitChangesX
-activate EventLoop
 activate Renderer
+
+Renderer -> Renderer: limitXChanged
 activate AlarmsBar
 activate Alarms
 activate iQuery
 activate AlarmsEngine
 
-Renderer -> iQuery: request(start : DateTime, end : DateTime, interval : int) : Array[][]
-iQuery --> Renderer: arr : Array[][]
+Renderer -> iQuery: request(start : DateTime, end : DateTime, interval : DateTime) : QVector<Cortege>
+iQuery --> Renderer: arr : QVector<Cortege>
 
-Renderer -> AlarmsEngine: pushAlarms(arr)
+Renderer -> Renderer : parceData(cortege : Cortege)
 
-Renderer -> AlarmsBar: updated()
+Renderer -> AlarmsEngine: pushAlarms( : QList<Alarm>)
+
+Renderer -> AlarmsBar: alarmsUpdated()
 AlarmsBar -> AlarmsBar:  clearValues()
 AlarmsBar -> AlarmsEngine: getAlarmsByPriority(lvl: LvlOfAlarms) : QVariantList
 
-Renderer -> Alarms:  updated()
+Renderer -> Alarms:  alarmsUpdated()
 Alarms -> Alarms:  clearValues()
 Alarms -> AlarmsEngine: getTextOfAlarms() : QVector<QString>
 
