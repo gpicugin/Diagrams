@@ -12,9 +12,14 @@ activate AlarmsEngine
 Renderer -> iQuery: request(start : DateTime, end : DateTime, interval : DateTime) : QVector<Cortege>
 iQuery --> Renderer: arr : QVector<Cortege>
 
-Renderer -> Renderer : parceData(cortege : Cortege)
+Renderer -> AlarmsEngine: clearAlarms()
 
-Renderer -> AlarmsEngine: pushAlarms( : QList<Alarm>)
+loop 
+    Renderer -> Renderer : parceData(cortege : Cortege)
+    Renderer -> AlarmsEngine: pushAlarms( : QList<Alarm>)
+end loop
+
+
 
 Renderer -> AlarmsBar: alarmsUpdated()
 AlarmsBar -> AlarmsBar:  clearValues()
@@ -22,7 +27,7 @@ AlarmsBar -> AlarmsEngine: getAlarmsByPriority(lvl: LvlOfAlarms) : QVariantList
 
 Renderer -> Alarms:  alarmsUpdated()
 Alarms -> Alarms:  clearValues()
-Alarms -> AlarmsEngine: getTextOfAlarms() : QVector<QString>
+Alarms -> AlarmsEngine: getTextOfAlarms(lvl: LvlOfAlarms) : QVector<QString>
 
 box qml #LightGreen
     participant AlarmsBar

@@ -13,6 +13,7 @@ class AlarmsEngine {
     - alarms: QVector<QList<Alarm>
     - sortAlarmsByPriority(): void
 
+    + clearAlarms() : void
     + pushAlarms(alarms: QList<Alarm>) : void
     + getAlarmsByPriority(lvl : LevelOfAlarms) : QVariantList {slot}
     + getTextOfAlarms() : QVector<QString> {slot}
