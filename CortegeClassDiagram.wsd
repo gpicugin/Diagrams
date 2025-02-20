@@ -1,0 +1,54 @@
+@startuml CortegeClassDiagram
+
+class Cortege {
+    + getHead() : std::string
+    + getTimemark() : std::string
+    + getData() : std::string
+    + resetAll() : void
+}
+
+struct Channel {
+    + initParams() : void
+    + reset() : void
+}
+
+
+class ParamShell {
+    - param : ParamStat<double>
+    + head : std::string
+    + reset() : void
+    + getMin() : double
+    + getMean() : double
+    + getMax() : double
+    + getNumber() : int
+    + push(double value) : void : {slot}
+}
+
+class ParamStat {
+    - n_records : unsigned int
+    - min : ParType
+    - max : ParType
+    - sum : ParType
+
+    + getMin() : double
+    + getMean() : double
+    + getMax() : double
+    + getNumber() : double
+}
+
+Cortege o-- Channel
+
+Channel o-- ParamShell
+
+ParamShell <-- ParamStat
+
+
+
+
+
+
+
+
+
+
+@enduml
