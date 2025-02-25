@@ -1,7 +1,7 @@
 @startuml ClassDiagram
 
 class Renderer {
-    - parceDate(cortege : Cortege) : void
+    - parceDatа(cortege : Cortege) : : QVector<Cortege>
     + alarmsUpdated() : void {signal}
 }
 
@@ -40,18 +40,5 @@ AlarmsFrame --> AlarmsEngine : engine
 
 AlarmsFrame --|> AlarmsBar
 AlarmsBar --> AlarmsEngine : engine
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @enduml

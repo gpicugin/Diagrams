@@ -24,23 +24,54 @@ class ParamShell {
     + push(double value) : void : {slot}
 }
 
-class ParamStat {
+class ParamStat<T> {
     - n_records : unsigned int
-    - min : ParType
-    - max : ParType
-    - sum : ParType
-
-    + getMin() : double
-    + getMean() : double
-    + getMax() : double
-    + getNumber() : double
+    - min : T
+    - max : T
+    - sum : T
+    + getMin() : T
+    + getMean() : T
+    + getMax() : T
+    + getNumber() : T
 }
 
-Cortege o-- Channel
+class AlarmTrackerShell {
+    + setAlarm(alarm : QString) : void : {slot}
+    + clearAlarm(alarm : QString) : void : {slot}
+    + resetControlPeriod() : void
+    + clearAllAlarms() : void
+    + getAlarms() : std::list<Entry<std::string>>
+}
 
-Channel o-- ParamShell
+class AlarmTracker<T> {
+    + setAlarm(alarms : T) : void
+    + clearAlarm(alarms : T) : void
+    + resetControlPeriod() : void
+    + clearAllAlarms() : void
+    + getAlarms() : std::list<Entry<std::string>>
 
-ParamShell <-- ParamStat
+}
+
+struct Entry<T> {
+    + alarm : T
+    + isActive : bool
+    + clearAlarm()
+}
+
+
+
+Cortege *-- " * " Channel
+
+Channel *-- " * " ParamShell
+
+Channel --> AlarmTrackerShell
+
+ParamShell --> ParamStat
+
+AlarmTrackerShell --> AlarmTracker
+
+AlarmTracker *-- " * " Entry
+
 
 
 
